@@ -1,32 +1,42 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-class Note extends React.Component {
-    render(){
+function Note(props) {
+        //the chosen note to be displayed
+        const note = props.store.notes.find(note => note.id === props.noteId);
+
+        //note route
         return (
             <div className="NotePage">
-                
                 <header>
-                    <h1>Noteful</h1>
+                    <Link to={'/'}>
+                        <h1>Noteful</h1>
+                    </Link> 
                 </header>    
 
-
-
-                <section className="SideBar">
-
-                </section>                    
-
-
-                <main>
-
-                </main>
-
-
+                <div>
+                    {/* Side Bar */}
+                    <section className="SideBar">
+                        <div>
+                            <button onClick={props.onClickGoBack} type="button">Back</button>
+                            <h1>{props.folderName}</h1>
+                        </div>    
+                    </section>     
+                                   
+                    {/* Main */}    
+                    <main>
+                        <div>
+                            <div>
+                                <h2>{note.name}</h2>
+                                <p>Date modified on {note.modified.slice(0,10)}</p>
+                                <button type="button">Delete Note</button>
+                            </div>    
+                            <p>{note.content}</p>     
+                        </div>    
+                    </main>
+                </div>
             </div>
         )
-    }
-
-
-
 }
 
 

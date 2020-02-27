@@ -1,11 +1,40 @@
-.MainPage > div {
+.MainPage > div, .FolderPage > div, .NotePage > div {
     display: flex;
     flex-direction: row;
 }
 
-.SideBar > div {
+.SideBar li, .SideBar div {
     border: 1px solid black;
     margin: 0px 10px;
+}
+
+.SideBar > li > h2 {
     cursor: pointer;
 }
+
+.SideBar a {
+    text-decoration: none;
+}
+
+.SideBar > button {
+    margin-left: 60px;
+}
+
+
+main > ul > li, main > div {
+    border: 1px solid black;
+}
+
+main > li > h3, button {
+    cursor: pointer;
+}
+
+.selectedLink > li {
+    background-color: lightgray;
+}
+
+li {
+    list-style-type: none;
+}
+
 
