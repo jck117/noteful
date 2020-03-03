@@ -25,6 +25,8 @@ class App extends React.Component {
     this.setState({noteId: idnote, folderId: idfolder, folderName: nameFolder}, /*()=>{console.log(this.state.noteId + " " + nameFolder)}*/);
   }
   
+  //noteful-updating-context
+  
   render() {    
     //console.log(this.state.store);
     return (
