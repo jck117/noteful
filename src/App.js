@@ -6,6 +6,9 @@ import Folder from './Folder';
 import Note from './Note';
 import './App.css';
 import NotefulContext from './NotefulContext';
+import AddFolder from './AddFolder';
+import AddNote from './AddNote';
+import config from './config';
 
 class App extends React.Component {
   state = {
@@ -49,34 +52,49 @@ class App extends React.Component {
     this.setState({notes: newNotes})
   }
 
-  componentDidMount(){
-    //fetch folders
-    fetch('http://localhost:9090/folders')
-      .then(res => {
-        if(!res.ok){
-          throw new Error(res.status)
-        }
-        return res.json()
-      })
-      .then(this.setFolders) //same as =>.then(resJson => this.setFolders(resJson))
-      .catch(error => console.log(error))
-
-    //fetch notes
-    fetch('http://localhost:9090/notes')
-      .then(res => {
-        if(!res.ok){
-          throw new Error(res.status)
-        }
-        return res.json()
-      })
-      .then(this.setNotes)
-      .catch(error => console.log(error))      
+  //handle when you add a folder
+  addFolder = folder => {
+    this.setState({
+      folders: [...this.state.folders, folder],
+      folderId: folder.id
+    })
   }
+
+  //handle when you add a note
+  addNote = note => {
+    this.setState({
+      notes: [...this.state.notes, note],
+      folderId: note.folderId
+    })
+  }
+
   
-  //test
+  componentDidMount(){
+    Promise.all([
+      fetch(`${config.API_ENDPOINT}/folders`),
+      fetch(`${config.API_ENDPOINT}/notes`)
+    ])
+      .then(([foldersRes, notesRes]) => {
+        if(!foldersRes.ok){
+          return foldersRes.json().then(e => Promise.reject(e));
+        }
+        if(!notesRes.ok){
+          return notesRes.json().then(e => Promise.reject(e));
+        }
+        return Promise.all([
+          foldersRes.json(),
+          notesRes.json()
+        ])
+      })
+      .then(([folders, notes]) => {
+        this.setState({folders, notes})
+      })
+      .catch(error => console.error({error})); 
+  }
+
+  
   render() {    
     console.log(this.state);
-
     const contextValue = {
       folders: this.state.folders,
       notes: this.state.notes,
@@ -86,6 +104,8 @@ class App extends React.Component {
       noteId: this.state.noteId,
       folderName: this.state.folderName,
       deleteNote: this.deleteNote,
+      addFolder: this.addFolder,
+      addNote: this.addNote,
     }
 
     return (
@@ -100,6 +120,12 @@ class App extends React.Component {
           {/* Note path */}                    
           <Route path = {`/note/${this.state.noteId}`}
                 component = {Note} />
+          {/* Add Folder path */}      
+          <Route path = {'/add-folder'}
+                component = {AddFolder} />
+          {/* Add Note path */}      
+          <Route path = {'/add-note'}
+                component = {AddNote} />              
         </NotefulContext.Provider>                              
       </div>
     );

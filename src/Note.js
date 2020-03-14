@@ -1,12 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import NotefulContext from './NotefulContext';
+import config from './config';
+
+//Note Route
 
 class Note extends React.Component {
     static contextType = NotefulContext;
 
     handleDeleteNote(noteId, callback) {
-        fetch(`http://localhost:9090/notes/${noteId}`, {
+        fetch(`${config.API_ENDPOINT}/${noteId}`, {
             method: 'DELETE',
             headers: {
                 'content-type': 'application/json'
@@ -14,9 +17,9 @@ class Note extends React.Component {
         })
         .then(res => {
             if(!res.ok){
-                throw new Error(res.status)
+                return res.json().then(e => Promise.reject(e));
             }
-            return res.json()
+            return res.json();
         })
         .then(data => {
             //console.log(data) //=> {}
@@ -24,7 +27,7 @@ class Note extends React.Component {
             callback(noteId);
             this.props.history.push('/');
         })
-        .catch(error => console.log(error))
+        .catch(error => console.error({error}))
     } 
 
     render(){
@@ -37,6 +40,7 @@ class Note extends React.Component {
                 <div>
                     <h2>{note.name}</h2>
                     <p>Date modified on {note.modified.slice(0,10)}</p>
+                    {/* Delete Note Button */}
                     <button type="button" onClick={()=>this.handleDeleteNote(note.id, deleteNote)}>Delete Note</button>
                 </div>    
                 <p>{note.content}</p>     
@@ -48,6 +52,7 @@ class Note extends React.Component {
         return (
             <div className="NotePage">
                 <header>
+                    {/* Link to return to '/' path */}
                     <Link to={'/'}>
                         <h1>Noteful</h1>
                     </Link> 
@@ -57,12 +62,13 @@ class Note extends React.Component {
                     {/* Side Bar */}
                     <section className="SideBar">
                         <div>
-                            <button onClick={()=> this.props.history.goBack()} type="button">Back</button>
+                            {/* Back Button */}
+                            <button onClick={this.props.history.goBack} type="button">Back</button>
                             <h1>{folderName}</h1>
                         </div>    
                     </section>     
                                 
-                    {/* Main */}    
+                    {/* Main Section */}    
                     <main>
                            {notefound}
                     </main>
@@ -75,3 +81,6 @@ class Note extends React.Component {
 
 
 export default Note;
+
+
+

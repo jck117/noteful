@@ -1,13 +1,16 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import NotefulContext from './NotefulContext';
+import config from './config';
+
+//Folder Route
 
 class Folder extends React.Component {
 
         static contextType = NotefulContext;
         
         handleDeleteNote(noteId, callback) {
-            fetch(`http://localhost:9090/notes/${noteId}`, {
+            fetch(`${config.API_ENDPOINT}/notes/${noteId}`, {
                 method: 'DELETE',
                 headers: {
                     'content-type': 'application/json'
@@ -15,16 +18,16 @@ class Folder extends React.Component {
             })
             .then(res => {
                 if(!res.ok){
-                    throw new Error(res.status)
+                    return res.json().then(e => Promise.reject(e));
                 }
-                return res.json()
+                return res.json();
             })
             .then(data => {
                 //console.log(data) //=> {}
                 //call the callback when the request is successful
                 callback(noteId)
             })
-            .catch(error => console.log(error))
+            .catch(error => console.error({error}))
         }        
 
         render(){
@@ -46,6 +49,7 @@ class Folder extends React.Component {
                         <h3 onClick={()=>selectedNote(note.id, note.folderId)}>{note.name}</h3>
                     </Link>
                     <p>Date modified on {note.modified.slice(0,10)}</p>
+                    {/* Delete Note Button */}
                     <button type="button" onClick={()=>this.handleDeleteNote(note.id, deleteNote)}>Delete Note</button>
                 </li>
             );    
@@ -54,6 +58,7 @@ class Folder extends React.Component {
             return (
                 <div className="FolderPage">
                     <header>
+                        {/* Link to return to '/' path */}
                         <Link to={'/'}>
                             <h1>Noteful</h1>
                         </Link>   
@@ -63,12 +68,19 @@ class Folder extends React.Component {
                         {/* Side Bar */}
                         <section className="SideBar">
                             <ul>{folders_html}</ul>
-                            <button type="button">Add Folder</button>
+                            <Link to={'/add-folder'}>
+                                {/* Add Folder Button */}
+                                <button className="add-folder-button" type="button">Add Folder</button>
+                            </Link>                          
                         </section>  
 
-                        {/* Main */}
+                        {/* Main Section */}
                         <main>
                             <ul>{notes_html}</ul>
+                            <Link to={'/add-note'}>
+                                {/* Add Note Button */}
+                                <button className="add-note-button" type="submit">Add Note</button>
+                            </Link>                           
                         </main>
                     </div>
                 </div>
