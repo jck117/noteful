@@ -9,7 +9,7 @@ class Note extends React.Component {
     static contextType = NotefulContext;
 
     handleDeleteNote(noteId, callback) {
-        fetch(`${config.API_ENDPOINT}/${noteId}`, {
+        fetch(`${config.API_ENDPOINT}/notes/${noteId}`, {
             method: 'DELETE',
             headers: {
                 'content-type': 'application/json'
@@ -52,7 +52,7 @@ class Note extends React.Component {
         return (
             <div className="NotePage">
                 <header>
-                    {/* Link to return to '/' path */}
+                    {/* Link to '/' path */}
                     <Link to={'/'}>
                         <h1>Noteful</h1>
                     </Link> 
@@ -62,7 +62,7 @@ class Note extends React.Component {
                     {/* Side Bar */}
                     <section className="SideBar">
                         <div>
-                            {/* Back Button */}
+                            {/* Go Back Button */}
                             <button onClick={this.props.history.goBack} type="button">Back</button>
                             <h1>{folderName}</h1>
                         </div>    

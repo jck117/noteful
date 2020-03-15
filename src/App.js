@@ -9,6 +9,7 @@ import NotefulContext from './NotefulContext';
 import AddFolder from './AddFolder';
 import AddNote from './AddNote';
 import config from './config';
+import ErrorBoundary from './ErrorBoundary';
 
 class App extends React.Component {
   state = {
@@ -92,7 +93,6 @@ class App extends React.Component {
       .catch(error => console.error({error})); 
   }
 
-  
   render() {    
     console.log(this.state);
     const contextValue = {
@@ -109,6 +109,7 @@ class App extends React.Component {
     }
 
     return (
+
       <div className="App">
         <NotefulContext.Provider value = {contextValue}>
           {/* Main path */}
@@ -117,15 +118,25 @@ class App extends React.Component {
           {/* Folder path */}                             
           <Route path = {`/folder/${this.state.folderId}`}
                 component = {Folder} />
-          {/* Note path */}                    
-          <Route path = {`/note/${this.state.noteId}`}
-                component = {Note} />
-          {/* Add Folder path */}      
-          <Route path = {'/add-folder'}
-                component = {AddFolder} />
-          {/* Add Note path */}      
-          <Route path = {'/add-note'}
-                component = {AddNote} />              
+
+          <ErrorBoundary path={`/note/${this.state.noteId}`}>
+            {/* Note path */}                    
+            <Route path = {`/note/${this.state.noteId}`}
+                  component = {Note} />
+          </ErrorBoundary>      
+   
+          <ErrorBoundary path={'/add-folder'}>
+            {/* Add Folder path */}         
+            <Route path = {'/add-folder'}
+                  component = {AddFolder} />
+          </ErrorBoundary>      
+      
+          <ErrorBoundary path={'/add-note'}>
+            {/* Add Note path */}
+            <Route path = {'/add-note'}
+                  component = {AddNote} />
+          </ErrorBoundary>      
+                    
         </NotefulContext.Provider>                              
       </div>
     );

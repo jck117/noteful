@@ -5,6 +5,7 @@ import NotefulContext from './NotefulContext';
 import config from './config';
 import ValidationError from './ValidationError';
 
+
 class AddFolder extends Component {
 
     static contextType = NotefulContext;
@@ -63,6 +64,7 @@ class AddFolder extends Component {
         return (
             <>
                 <header>
+                    {/* Link to '/' path */}
                     <Link to={'/'}>
                         <h1>Noteful</h1>
                     </Link>    
@@ -77,7 +79,7 @@ class AddFolder extends Component {
                         <h2>Create a New Folder</h2>
                         <form className="add-new-folder" onSubmit={this.handleSubmit}>
                             <label htmlFor="new-folder">Name:</label>
-                            <input type="text" name="new-folder" id="new-folder" onChange={(e)=>this.updateName(e.target.value)}/>
+                            <input type="text" name="new-folder" id="new-folder" maxlength="25" onChange={(e)=>this.updateName(e.target.value)}/>
                             <ValidationError message={this.validateName()}/>
                             <div>
                                 {/* Add Folder Button */}

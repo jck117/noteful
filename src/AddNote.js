@@ -98,6 +98,7 @@ class AddNote extends Component {
         return (
             <>
                 <header>
+                    {/* Link to '/' path */}
                     <Link to={'/'}>
                         <h1>Noteful</h1>
                     </Link>    
@@ -114,11 +115,11 @@ class AddNote extends Component {
                         <form className="add-new-note" onSubmit={this.handleSubmit}>
 
                             <label htmlFor="new-note-name">Name:</label>
-                            <input type="text" name="new-note-name" id="new-note-name" onChange={e => this.updateName(e.target.value)}/>
+                            <input type="text" name="new-note-name" id="new-note-name" maxlength="25" onChange={e => this.updateName(e.target.value)}/>
                             <ValidationError message={this.validateName()} />
 
                             <label htmlFor="new-note-content">Content:</label>
-                            <textarea name="new-note-content" id="new-note-content" rows="5"/>
+                            <textarea name="new-note-content" id="new-note-content" maxlength="500" rows="5"/>
 
                             <label htmlFor="folder-select">Folder:</label>
                             <select id="folder-select" name="folder-select" onChange={e => this.updateFolder(e.target.value)}>
