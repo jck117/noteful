@@ -40,7 +40,7 @@ main > li > h3, button {
     margin-bottom: 50px;
 }
 
-.selectedLink > li {
+.selectedLink > h2 {
     background-color: lightgray;
 }
 

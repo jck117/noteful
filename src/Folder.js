@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import NotefulContext from './NotefulContext';
 import config from './config';
@@ -36,20 +36,20 @@ class Folder extends React.Component {
 
             //array of all folders with their relevant html markup
             const folders_html = folders.map((folder, i) => 
-                //Link to '/folder/folder.id' path
-                <NavLink key={i} to={`/folder/${folder.id}`} activeClassName="selectedLink">
-                    <li onClick={()=>selectedFolder(folder.id) } >
-                        <h2 >{folder.name}</h2>
+                    <li>
+                        {/* Link to '/folder/folder.id' path */}
+                        <NavLink onClick={()=>selectedFolder(folder.id) } key={i} to={`/folder/${folder.id}`} activeClassName="selectedLink">
+                            <h2 >{folder.name}</h2>
+                        </NavLink>
                     </li>  
-                </NavLink>
             )
 
             //array of all notes related to the selected folder with their relevant html markup
             const notes_html = notes.filter(note => note.folderId === folderId).map((note, i) => 
                 <li key={i}>
                     {/* Link to '/note/note.id' path */}
-                    <Link to={`/note/${note.id}`}>
-                        <h3 onClick={()=>selectedNote(note.id, note.folderId)}>{note.name}</h3>
+                    <Link onClick={()=>selectedNote(note.id, note.folderId)} to={`/note/${note.id}`}>
+                        <h3 >{note.name}</h3>
                     </Link>
                     <p>Date modified on {note.modified.slice(0,10)}</p>
                     {/* Delete Note Button */}
