@@ -12,6 +12,7 @@
     cursor: pointer;
 }
 
+
 .SideBar a {
     text-decoration: none;
 }
@@ -40,8 +41,15 @@ main > li > h3, button {
     margin-bottom: 50px;
 }
 
-.selectedLink > h2 {
+li .selectedLink {
+    display: block;
     background-color: lightgray;
+    border: 0.1px solid lightgray;
+}
+
+li > a > h2, .SideBar h1 {
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 li {
@@ -51,3 +59,5 @@ li {
 .add-folder-button {
     margin-left: 5em;
 }
+
+

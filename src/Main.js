@@ -39,7 +39,7 @@ class Main extends React.Component {
                  <li>   
                     {/* Link to '/folder/folder.id' path */}
                     <NavLink onClick={()=>selectedFolder(folder.id) } key={i} to={`/folder/${folder.id}`} activeClassName="selectedLink">
-                        <h2 >{folder.name}</h2>
+                        <h2>{folder.name}</h2>
                     </NavLink>
                  </li>
             )
@@ -74,7 +74,7 @@ class Main extends React.Component {
                             {/* Link to '/add-folder' path */}
                             <Link to={'/add-folder'}>
                                 {/* Add Folder Button */}
-                                <button className="add-folder-button" type="button">Add Folder</button>
+                                <button className="add-folder-button" type="button"  >Add Folder</button>
                             </Link>    
                         </section>
                         
