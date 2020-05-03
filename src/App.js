@@ -15,21 +15,21 @@ class App extends React.Component {
   state = {
     folders: [],
     notes: [],
-    folderId: null,
+    folder_id: null,
     noteId: null,
     folderName: null
   }
 
   //when a folder is clicked on, to update the state accordingly in App.js
   handleFolderSelect = id => {
-    this.setState({folderId: id}, 
-      ()=>console.log(this.state.folderId));
+    this.setState({folder_id: id}, 
+      ()=>console.log(this.state.folder_id));
   }
 
   //when a note is clicked on, to update the state accordingly in App.js
   handleNoteSelect = (idnote, idfolder) => {
     const nameFolder = this.state.folders.find(folder => folder.id === idfolder).name; //name of folder (e.g. "Important")
-    this.setState({noteId: idnote, folderId: idfolder, folderName: nameFolder},
+    this.setState({noteId: idnote, folder_id: idfolder, folderName: nameFolder},
       ()=>{console.log(this.state.noteId + " " + nameFolder)});
   }
 
@@ -57,7 +57,7 @@ class App extends React.Component {
   addFolder = folder => {
     this.setState({
       folders: [...this.state.folders, folder],
-      folderId: folder.id
+      folder_id: folder.id
     })
   }
 
@@ -65,7 +65,7 @@ class App extends React.Component {
   addNote = note => {
     this.setState({
       notes: [...this.state.notes, note],
-      folderId: note.folderId
+      folder_id: note.folder_id
     })
   }
 
@@ -100,7 +100,7 @@ class App extends React.Component {
       notes: this.state.notes,
       selectedFolder: this.handleFolderSelect,
       selectedNote: this.handleNoteSelect,
-      folderId: this.state.folderId,
+      folder_id: this.state.folder_id,
       noteId: this.state.noteId,
       folderName: this.state.folderName,
       deleteNote: this.deleteNote,
@@ -116,7 +116,7 @@ class App extends React.Component {
           <Route exact path = '/' 
                 component = { Main } />
           {/* Folder path */}                             
-          <Route path = {`/folder/${this.state.folderId}`}
+          <Route path = {`/folder/${this.state.folder_id}`}
                 component = {Folder} />
 
           <ErrorBoundary path={`/note/${this.state.noteId}`}>

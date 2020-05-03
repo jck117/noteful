@@ -49,8 +49,8 @@ class AddNote extends Component {
     }
 
     validateFolder(){
-        const folderId = this.state.folder.value;
-        if(folderId==="None" || folderId===''){
+        const folder_id = this.state.folder.value;
+        if(folder_id==="None" || folder_id===''){
             return "Please select a folder";
         }
     }
@@ -60,10 +60,10 @@ class AddNote extends Component {
        const newNote = {
            name: this.state.name.value, //e.target['new-note-name'].value,
            modified: new Date(),
-           folderId: this.state.folder.value, //e.target['folder-select'].value,
+           folder_id: this.state.folder.value, //e.target['folder-select'].value,
            content: e.target['new-note-content'].value,
        };
-       //console.log(newNote.folderId)
+       //console.log(newNote.folder_id)
        fetch(`${config.API_ENDPOINT}/notes`, {
            method: 'POST',
            headers: {
@@ -80,7 +80,7 @@ class AddNote extends Component {
         })
         .then(note => {
             this.context.addNote(note);
-            this.props.history.push(`/folder/${note.folderId}`);
+            this.props.history.push(`/folder/${note.folder_id}`);
         })
         .catch(error => {
             console.error({error})

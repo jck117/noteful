@@ -20,19 +20,19 @@ class Folder extends React.Component {
                 if(!res.ok){
                     return res.json().then(e => Promise.reject(e));
                 }
-                return res.json();
+                return res.text()
             })
-            .then(data => {
-                //console.log(data) //=> {}
-                //call the callback when the request is successful
-                callback(noteId);
-                //this.props.history.push('/');
-            })
+            .then(text => text ? 
+                text.json()
+                 :
+                {}
+             )
+            .then(callback(noteId))
             .catch(error => console.error({error}))
         }         
 
         render(){
-            const {folders, notes, selectedNote, selectedFolder, folderId, deleteNote } = this.context;
+            const {folders, notes, selectedNote, selectedFolder, folder_id, deleteNote } = this.context;
 
             //array of all folders with their relevant html markup
             const folders_html = folders.map((folder, i) => 
@@ -45,10 +45,10 @@ class Folder extends React.Component {
             )
 
             //array of all notes related to the selected folder with their relevant html markup
-            const notes_html = notes.filter(note => note.folderId === folderId).map((note, i) => 
+            const notes_html = notes.filter(note => note.folder_id === folder_id).map((note, i) => 
                 <li key={i}>
                     {/* Link to '/note/note.id' path */}
-                    <Link onClick={()=>selectedNote(note.id, note.folderId)} to={`/note/${note.id}`}>
+                    <Link onClick={()=>selectedNote(note.id, note.folder_id)} to={`/note/${note.id}`}>
                         <h3 >{note.name}</h3>
                     </Link>
                     <p>Date modified on {note.modified.slice(0,10)}</p>

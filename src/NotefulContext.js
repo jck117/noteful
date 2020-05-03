@@ -5,7 +5,7 @@ const NotefulContext = React.createContext({
     notes: [],
     selectedFolder: () => {},
     selectedNote: () => {},
-    folderId: null,
+    folder_id: null,
     noteId: null,
     folderName: null
 })

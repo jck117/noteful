@@ -9,6 +9,8 @@ class Note extends React.Component {
     static contextType = NotefulContext;
 
     handleDeleteNote(noteId, callback) {
+        console.log(noteId)
+        /*
         fetch(`${config.API_ENDPOINT}/notes/${noteId}`, {
             method: 'DELETE',
             headers: {
@@ -28,6 +30,7 @@ class Note extends React.Component {
             this.props.history.push('/');
         })
         .catch(error => console.error({error}))
+        */
     } 
 
     render(){

@@ -20,14 +20,14 @@ class Main extends React.Component {
                 if(!res.ok){
                     return res.json().then(e => Promise.reject(e));
                 }
-                return res.json();
+                return res.text()
             })
-            .then(data => {
-                //console.log(data) //=> {}
-                //call the callback when the request is successful
-                callback(noteId);
-                //this.props.history.push('/');
-            })
+            .then(text => text ? 
+                text.json()
+                 :
+                {}
+             )
+            .then(callback(noteId))
             .catch(error => console.error({error}))
         } 
 
@@ -48,7 +48,7 @@ class Main extends React.Component {
             const notes_html = notes.map((note, i) => 
                 <li key={i}>
                     {/* Link to '/note/note.id' path */}
-                    <Link onClick={()=>selectedNote(note.id, note.folderId)} to={`/note/${note.id}`}>
+                    <Link onClick={()=>selectedNote(note.id, note.folder_id)} to={`/note/${note.id}`}>
                         <h3>{note.name}</h3>
                     </Link>
                     <p>Date modified on {note.modified.slice(0,10)}</p>
