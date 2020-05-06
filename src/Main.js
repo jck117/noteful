@@ -36,9 +36,9 @@ class Main extends React.Component {
 
             //array of all folders with their relevant html markup
             const folders_html = folders.map((folder, i) =>
-                 <li>   
+                 <li key={i}>   
                     {/* Link to '/folder/folder.id' path */}
-                    <NavLink onClick={()=>selectedFolder(folder.id) } key={i} to={`/folder/${folder.id}`} activeClassName="selectedLink">
+                    <NavLink onClick={()=>selectedFolder(folder.id) } to={`/folder/${folder.id}`} activeClassName="selectedLink">
                         <h2>{folder.name}</h2>
                     </NavLink>
                  </li>

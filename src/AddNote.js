@@ -63,7 +63,6 @@ class AddNote extends Component {
            folder_id: this.state.folder.value, //e.target['folder-select'].value,
            content: e.target['new-note-content'].value,
        };
-       //console.log(newNote.folder_id)
        fetch(`${config.API_ENDPOINT}/notes`, {
            method: 'POST',
            headers: {
@@ -75,7 +74,6 @@ class AddNote extends Component {
             if(!res.ok){
                 return res.json().then(e => Promise.reject(e))
             }
-            //console.log(res.json());
             return res.json();
         })
         .then(note => {
@@ -115,11 +113,11 @@ class AddNote extends Component {
                         <form className="add-new-note" onSubmit={this.handleSubmit}>
 
                             <label htmlFor="new-note-name">Name:</label>
-                            <input type="text" name="new-note-name" id="new-note-name" maxlength="25" onChange={e => this.updateName(e.target.value)}/>
+                            <input type="text" name="new-note-name" id="new-note-name" maxLength="25" onChange={e => this.updateName(e.target.value)}/>
                             <ValidationError message={this.validateName()} />
 
                             <label htmlFor="new-note-content">Content:</label>
-                            <textarea name="new-note-content" id="new-note-content" maxlength="500" rows="5"/>
+                            <textarea name="new-note-content" id="new-note-content" maxLength="500" rows="5"/>
 
                             <label htmlFor="folder-select">Folder:</label>
                             <select id="folder-select" name="folder-select" onChange={e => this.updateFolder(e.target.value)}>

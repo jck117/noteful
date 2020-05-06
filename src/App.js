@@ -22,15 +22,13 @@ class App extends React.Component {
 
   //when a folder is clicked on, to update the state accordingly in App.js
   handleFolderSelect = id => {
-    this.setState({folder_id: id}, 
-      ()=>console.log(this.state.folder_id));
+    this.setState({folder_id: id})
   }
 
   //when a note is clicked on, to update the state accordingly in App.js
   handleNoteSelect = (idnote, idfolder) => {
     const nameFolder = this.state.folders.find(folder => folder.id === idfolder).name; //name of folder (e.g. "Important")
-    this.setState({noteId: idnote, folder_id: idfolder, folderName: nameFolder},
-      ()=>{console.log(this.state.noteId + " " + nameFolder)});
+    this.setState({noteId: idnote, folder_id: idfolder, folderName: nameFolder});
   }
 
   //set folders in state from API fetch
@@ -94,7 +92,6 @@ class App extends React.Component {
   }
 
   render() {    
-    console.log(this.state);
     const contextValue = {
       folders: this.state.folders,
       notes: this.state.notes,
@@ -144,6 +141,9 @@ class App extends React.Component {
 }
 
 export default App;
+
+
+
 
 
 
