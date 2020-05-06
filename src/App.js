@@ -109,9 +109,11 @@ class App extends React.Component {
 
       <div className="App">
         <NotefulContext.Provider value = {contextValue}>
+ 
           {/* Main path */}
           <Route exact path = '/' 
                 component = { Main } />
+
           {/* Folder path */}                             
           <Route path = {`/folder/${this.state.folder_id}`}
                 component = {Folder} />
